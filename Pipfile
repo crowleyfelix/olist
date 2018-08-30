@@ -14,7 +14,6 @@ python_version = "3.6"
 
 ptpython = "*"
 pylama = "*"
-pylint-quotes = "*"
 pytest = "*"
 pytest-cov = "*"
 "autopep8" = "*"
