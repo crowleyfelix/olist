@@ -9,7 +9,7 @@ def register(blueprint):
 
 
 async def create(request):
-    """Create call reco[d."""
+    """Create call record."""
     service = services.CallRecord()
 
     body = request.json
