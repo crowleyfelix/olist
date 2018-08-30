@@ -1,5 +1,6 @@
 """Contains Application class."""
 import logging
+from app import resources
 from app.infrastructure.web import Engine
 from app.infrastructure.enums import AppMode
 from app.infrastructure.configuration import get_config
@@ -19,6 +20,8 @@ class Application(object):
         LOGGER.info("Starting application")
 
         engine = Engine(configure_logging=False)
+        resources.register(engine)
+
         engine.run(self.config.host,
                    self.config.port,
                    debug=self.config.mode == AppMode.DEBUG,
