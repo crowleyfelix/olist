@@ -33,5 +33,10 @@ def _load_config():
             level=env.get("LOGGING_LEVEL", "DEBUG"),
             format=env.get("LOGGING_FORMAT", LOG_FORMAT),
             datefmt=env.get("LOGGING_DATEFORMAT", DATETIME_FORMAT)
+        ),
+
+        mongo=Munch(
+            uri=env.get("MONGO_URI", "mongodb://localhost:27017/"),
+            database=env.get("MONGO_DATABASE", "olist")
         )
     )
