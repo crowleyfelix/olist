@@ -12,3 +12,4 @@ class CallRecord(object):
     def add_record(self, record):
         """Add call record."""
         self.repository.add_record(record)
+        return record

@@ -14,3 +14,4 @@ class CallRecord(object):
     def add_record(self, record):
         """Add start or end record."""
         self._collection.insert_one(record)
+        record.pop('_id')
