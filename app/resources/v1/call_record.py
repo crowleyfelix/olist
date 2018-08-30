@@ -14,5 +14,5 @@ async def create(request):
 
     body = request.json
 
-    record = service.add_record(body)
+    record = service.create(body)
     return web.json(record)
