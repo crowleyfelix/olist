@@ -18,3 +18,9 @@ pytest = "*"
 pytest-cov = "*"
 "autopep8" = "*"
 rope = "*"
+
+
+[packages]
+
+sanic = "*"
+munch = "*"
