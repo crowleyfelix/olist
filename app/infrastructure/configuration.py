@@ -1,7 +1,7 @@
 """Module that contains configuration helpers."""
 import os
 from munch import Munch
-from .app_mode import AppMode
+from .enums import AppMode
 
 _CONFIG = Munch()
 
