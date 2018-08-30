@@ -7,3 +7,6 @@
 *.log
 .env
 tmp
+
+# VS Code
+*.vscode/
