@@ -15,7 +15,7 @@ STANDARD_CYCLE = {
         (parse("2018-02-28T21:57:13Z", dtfmt),
          parse("2018-02-28T22:00:00Z", dtfmt)),
         (parse("2018-03-01T06:00:00Z", dtfmt),
-         parse("2018-03-01T22:22:00Z", dtfmt))
+         parse("2018-03-01T22:00:00Z", dtfmt))
     ]
 }
 
@@ -25,7 +25,7 @@ REDUCED_CYCLE = {
     "ocurrencies": [
         (parse("2018-02-28T22:00:00Z", dtfmt),
          parse("2018-03-01T06:00:00Z", dtfmt)),
-        (parse("2018-03-01T22:22:00Z", dtfmt),
+        (parse("2018-03-01T22:00:00Z", dtfmt),
          parse("2018-03-01T22:10:56Z", dtfmt))
     ]
 }

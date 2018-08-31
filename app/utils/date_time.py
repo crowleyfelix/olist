@@ -2,55 +2,67 @@
 from datetime import timedelta
 
 
-def get_cycle_ocurrencies(start_range, end_range,
-                          start_cycle, end_cycle):
-    """Get cycle ocurrencies from date range ."""
-    ocurrencies = []
+class DateTimeCycle(object):
+    """Class to handle with datetime cycles."""
 
-    start_cycle = to_closer_time(start_range, start_cycle)
-    end_cycle = to_next_time(start_range, end_cycle)
+    @classmethod
+    def get_cycle_ocurrencies(cls, start_range, end_range,
+                              start_cycle, end_cycle):
+        """Get cycle ocurrencies from date range ."""
+        ocurrencies = []
 
-    import pdb
-    pdb.set_trace()
-    while start_range < end_range:
+        started_cycle, ended_cycle = cls.find_current_cycle(
+            start_range, start_cycle, end_cycle)
 
-        # If start range is between cycle, append ocurrencies
-        if start_cycle <= start_range <= end_cycle:
+        while start_range < end_range:
 
-            if end_cycle < end_range:
-                ocurrencies.append((start_range, end_cycle))
-            else:
-                ocurrencies.append((start_range, end_range))
+            # If start range is between cycle, append ocurrencies
+            if is_in_range(start_range, started_cycle, ended_cycle):
+                if ended_cycle < end_range:
+                    ocurrencies.append((start_range, ended_cycle))
+                else:
+                    ocurrencies.append((start_range, end_range))
 
-        start_range = to_next_time(start_range, start_cycle.time())
+            start_range = to_next_time(start_range, start_cycle)
 
-        # If start range is greater then start cycle, go to next cycle
-        if start_range > start_cycle:
-            start_cycle = to_next_time(start_cycle, start_cycle.time())
-            end_cycle = to_next_time(end_cycle, end_cycle.time())
+            # If start range is greater then start cycle, go to next cycle
+            if start_range > started_cycle:
+                started_cycle, ended_cycle = cls.get_next_cycle(
+                    started_cycle, ended_cycle)
 
-    return ocurrencies
+        return ocurrencies
+
+    @staticmethod
+    def find_current_cycle(reference_datetime, start_cycle, end_cycle):
+        """Find current cycle from date reference."""
+        if is_in_range(reference_datetime.time(), start_cycle, end_cycle):
+            started_cycle = to_previous_time(reference_datetime, start_cycle)
+        else:
+            started_cycle = to_next_time(reference_datetime, start_cycle)
+
+        ended_cycle = to_next_time(started_cycle, end_cycle)
+
+        return (started_cycle, ended_cycle)
+
+    @staticmethod
+    def get_next_cycle(started_cycle, ended_cycle):
+        """Get to next cycle."""
+        started_cycle = to_next_time(started_cycle, started_cycle.time())
+        ended_cycle = to_next_time(ended_cycle, ended_cycle.time())
+
+        return (started_cycle, ended_cycle)
 
 
-def to_closer_time(datetime, time):
-    """Go to closer time."""
-    previous_time = to_previous_time(datetime, time)
-    next_time = to_next_time(datetime, time)
-
-    diff_previous = datetime - previous_time
-    diff_next = next_time - datetime
-
-    if diff_previous <= diff_next:
-        return previous_time
-
-    return next_time
+def is_in_range(reference, start_range, end_range):
+    """Is reference in range."""
+    return start_range <= reference <= end_range
 
 
 def to_previous_time(datetime, time):
-    """Go to previous time."""
+    """Get to previous time."""
     days_to_add = 0
 
-    if datetime.time() < time:
+    if datetime.time() <= time:
         days_to_add = 1
 
     datetime -= timedelta(days=days_to_add)
@@ -60,7 +72,7 @@ def to_previous_time(datetime, time):
 
 
 def to_next_time(datetime, time):
-    """Go to next time."""
+    """Get to next time."""
     days_to_add = 0
 
     if datetime.time() >= time:

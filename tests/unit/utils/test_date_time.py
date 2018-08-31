@@ -1,10 +1,10 @@
 from datetime import datetime
 from unittest import TestCase
-from app.utils.date_time import get_cycle_ocurrencies
+from app.utils.date_time import DateTimeCycle
 from . import fixtures
 
 
-class TestDateTime(TestCase):
+class TestDateTimeCycle(TestCase):
     def test_get_cycle_ocurrencies(self):
         with self.subTest("with standard cycle"):
             start_range = fixtures.START_RANGE
@@ -13,7 +13,7 @@ class TestDateTime(TestCase):
             end_cycle = fixtures.STANDARD_CYCLE["end"]
             expected = fixtures.STANDARD_CYCLE["ocurrencies"]
 
-            actual = get_cycle_ocurrencies(
+            actual = DateTimeCycle.get_cycle_ocurrencies(
                 start_range, end_range, start_cycle, end_cycle)
 
             self.assertEqual(actual, expected)
@@ -25,7 +25,7 @@ class TestDateTime(TestCase):
             end_cycle = fixtures.REDUCED_CYCLE["end"]
             expected = fixtures.REDUCED_CYCLE["ocurrencies"]
 
-            actual = get_cycle_ocurrencies(
+            actual = DateTimeCycle.get_cycle_ocurrencies(
                 start_range, end_range, start_cycle, end_cycle)
 
             self.assertEqual(actual, expected)
