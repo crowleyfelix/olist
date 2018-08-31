@@ -7,25 +7,60 @@ def get_cycle_ocurrencies(start_range, end_range,
     """Get cycle ocurrencies from date range ."""
     ocurrencies = []
 
-    started_cycle = start_range
+    start_cycle = to_closer_time(start_range, start_cycle)
+    end_cycle = to_next_time(start_range, end_cycle)
 
-    while started_cycle < end_range:
+    import pdb
+    pdb.set_trace()
+    while start_range < end_range:
 
-        if start_cycle <= started_cycle.time() <= end_cycle:
+        # If start range is between cycle, append ocurrencies
+        if start_cycle <= start_range <= end_cycle:
 
-            if end_cycle < end_range.time():
-                ended_cycle = to_next_time(started_cycle, end_cycle)
+            if end_cycle < end_range:
+                ocurrencies.append((start_range, end_cycle))
             else:
-                ended_cycle = end_range
+                ocurrencies.append((start_range, end_range))
 
-            ocurrencies.append((started_cycle, ended_cycle))
+        start_range = to_next_time(start_range, start_cycle.time())
 
-        started_cycle = to_next_time(started_cycle, start_cycle)
+        # If start range is greater then start cycle, go to next cycle
+        if start_range > start_cycle:
+            start_cycle = to_next_time(start_cycle, start_cycle.time())
+            end_cycle = to_next_time(end_cycle, end_cycle.time())
 
     return ocurrencies
 
 
+def to_closer_time(datetime, time):
+    """Go to closer time."""
+    previous_time = to_previous_time(datetime, time)
+    next_time = to_next_time(datetime, time)
+
+    diff_previous = datetime - previous_time
+    diff_next = next_time - datetime
+
+    if diff_previous <= diff_next:
+        return previous_time
+
+    return next_time
+
+
+def to_previous_time(datetime, time):
+    """Go to previous time."""
+    days_to_add = 0
+
+    if datetime.time() < time:
+        days_to_add = 1
+
+    datetime -= timedelta(days=days_to_add)
+    return datetime.replace(hour=time.hour,
+                            minute=time.minute,
+                            second=time.second)
+
+
 def to_next_time(datetime, time):
+    """Go to next time."""
     days_to_add = 0
 
     if datetime.time() >= time:
