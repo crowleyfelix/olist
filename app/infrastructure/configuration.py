@@ -7,6 +7,10 @@ _CONFIG = Munch()
 
 LOG_FORMAT = "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"
 DATETIME_FORMAT = "%m-%d %H:%M"
+ROOT_PATH = os.path.join(
+    os.path.pardir, os.path.dirname(__file__),
+    os.path.pardir,
+    os.path.pardir)
 
 
 def get_config():
@@ -24,10 +28,14 @@ def get_config():
 def _load_config():
     env = os.environ
 
+    queries_path = os.path.abspath(
+        os.path.join(ROOT_PATH, "static", "queries"))
+
     _CONFIG.update(
         mode=AppMode(int(env.get("MODE", AppMode.DEBUG.value))),
         host=env.get("HOST", "0.0.0.0"),
         port=env.get("PORT", 8000),
+        queries_path=env.get("QUERIES_PATH", queries_path),
 
         logging=Munch(
             level=env.get("LOGGING_LEVEL", "DEBUG"),
