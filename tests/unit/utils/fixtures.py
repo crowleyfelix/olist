@@ -1,31 +1,26 @@
-from datetime import datetime
+from tests.utils import parse_time, parse_datetime
 
-parse = datetime.strptime
-
-dtfmt = "%Y-%m-%dT%H:%M:%SZ"
-tfmt = "%H:%M"
-
-START_RANGE = parse("2018-02-28T21:57:13Z", dtfmt)
-END_RANGE = parse("2018-03-01T22:10:56Z", dtfmt)
+START_RANGE = parse_datetime("2018-02-28T21:57:13Z")
+END_RANGE = parse_datetime("2018-03-01T22:10:56Z")
 
 STANDARD_CYCLE = {
-    "start": parse("06:00", tfmt).time(),
-    "end": parse("22:00", tfmt).time(),
+    "start": parse_time("06:00"),
+    "end": parse_time("22:00"),
     "ocurrencies": [
-        (parse("2018-02-28T21:57:13Z", dtfmt),
-         parse("2018-02-28T22:00:00Z", dtfmt)),
-        (parse("2018-03-01T06:00:00Z", dtfmt),
-         parse("2018-03-01T22:00:00Z", dtfmt))
+        (parse_datetime("2018-02-28T21:57:13Z"),
+         parse_datetime("2018-02-28T22:00:00Z")),
+        (parse_datetime("2018-03-01T06:00:00Z"),
+         parse_datetime("2018-03-01T22:00:00Z"))
     ]
 }
 
 REDUCED_CYCLE = {
-    "start": parse("22:00", tfmt).time(),
-    "end": parse("06:00", tfmt).time(),
+    "start": parse_time("22:00"),
+    "end": parse_time("06:00"),
     "ocurrencies": [
-        (parse("2018-02-28T22:00:00Z", dtfmt),
-         parse("2018-03-01T06:00:00Z", dtfmt)),
-        (parse("2018-03-01T22:00:00Z", dtfmt),
-         parse("2018-03-01T22:10:56Z", dtfmt))
+        (parse_datetime("2018-02-28T22:00:00Z"),
+         parse_datetime("2018-03-01T06:00:00Z")),
+        (parse_datetime("2018-03-01T22:00:00Z"),
+         parse_datetime("2018-03-01T22:10:56Z"))
     ]
 }

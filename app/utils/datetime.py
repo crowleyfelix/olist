@@ -1,6 +1,9 @@
 """Module with datetime processors."""
 import pandas
-from datetime import timedelta
+from datetime import datetime, timedelta
+
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+TIME_FORMAT = "%H:%M"
 
 
 def date_range(start, end):
@@ -38,3 +41,13 @@ def get_cycle_ocurrencies(start_range, end_range,
             started_cycle = None
 
     return ocurrencies
+
+
+def to_time(raw):
+    """Convert to time."""
+    return datetime.strptime(raw, TIME_FORMAT).time()
+
+
+def to_datetime(raw):
+    """Convert to datetime."""
+    return datetime.strptime(raw, DATETIME_FORMAT)
