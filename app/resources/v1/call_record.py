@@ -9,10 +9,10 @@ def register(blueprint):
 
 
 async def create(request):
-    """Create call reco[d."""
+    """Create call record."""
     service = services.CallRecord()
 
     body = request.json
 
-    record = service.add_record(body)
+    record = service.create(body)
     return web.json(record)
