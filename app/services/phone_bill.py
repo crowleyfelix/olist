@@ -1,7 +1,7 @@
 """Module with bill service."""
 from app import mongo
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+from app.processors import billing
+from app.utils import datetime
 
 
 class PhoneBill(object):
@@ -17,15 +17,20 @@ class PhoneBill(object):
         end_date = None
 
         if not period:
-            today = datetime.today()
-            period = f"{today.year}{today.month}"
-
-            start_date = datetime.strptime(period, "%Y%m")
-            start_date = start_date - relativedelta(months=1)
+            start_date, end_date = datetime.begin_end_previous_month()
         else:
-            start_date = datetime.strptime(period, "%Y%m")
+            start_date, end_date = datetime.begin_end_month(period)
 
-        end_date = start_date + relativedelta(months=1, days=-1)
+        documents = self.collection.search(phone_number, start_date, end_date)
 
-        result = self.collection.search(phone_number, start_date, end_date)
-        return result
+        calls = []
+        for call in documents:
+
+            start_date = datetime.from_timestamp(call["start_timestamp"])
+            end_date = datetime.from_timestamp(call["end_timestamp"])
+            call["amount"] = billing.process_call(
+                start_date, end_date)
+
+            calls.append(call)
+
+        return calls
