@@ -1,7 +1,7 @@
 """Module with call record repository."""
+from . import query
 from .engine import get_collection
-from .query_builders import CallRecord as builder
-from .types import List
+from .types import Documents, Document
 
 COLLECTION_NAME = "callRecord"
 
@@ -16,16 +16,16 @@ class CallRecord(object):
     def add(self, record):
         """Add start or end record."""
         self._collection.insert_one(record)
-        record.pop('_id')
-
-        return record
+        return Document(record)
 
     def search(self, phone_number, start_date, end_date):
         """Search by call records."""
         start_timestamp = start_date.timestamp()
         end_timestamp = end_date.timestamp()
 
-        query = builder.by_billing_cycle(phone_number,
-                                         start_timestamp,
-                                         end_timestamp)
-        return List(self._collection.find(query))
+        builded_query = query.build(query.LIST_CALLS,
+                                    source=phone_number,
+                                    start_timestamp=start_timestamp,
+                                    end_timestamp=end_timestamp)
+
+        return Documents(self._collection.aggregate(builded_query))

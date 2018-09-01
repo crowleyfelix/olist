@@ -1,8 +1,8 @@
 """Module for mongo types."""
 
 
-class List(object):
-    """List cursor."""
+class Documents(object):
+    """Wrapper for mongo cursor."""
 
     def __init__(self, cursor):
         """Initialize attributes."""
@@ -15,9 +15,16 @@ class List(object):
     def __next__(self):
         """Get next value."""
         try:
-            document = self._cursor.next()
-            document.pop("_id")
-            return document
+            return Document(self._cursor.next())
         except StopIteration as ex:
             self._cursor.close()
             raise ex
+
+
+class Document(dict):
+    """Wrapper for mongo document."""
+
+    def __init__(self, raw):
+        """Initialize attributes."""
+        raw.pop("_id")
+        self.update(**raw)
