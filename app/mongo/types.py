@@ -21,7 +21,7 @@ class Documents(object):
         try:
             return Document(next(self._cursor))
         except StopIteration as ex:
-            if getattr(self._cursor, "close"):
+            if hasattr(self._cursor, "close"):
                 self._cursor.close()
             raise ex
 

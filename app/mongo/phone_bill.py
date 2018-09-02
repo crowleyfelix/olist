@@ -1,4 +1,5 @@
 """Module with phone bill repository."""
+from app.processors import paging
 from .engine import get_collection
 from .types import Documents
 from . import query
@@ -16,7 +17,7 @@ class PhoneBill(object):
     def add(self, bill):
         """Add start or end bill."""
         self._collection.insert_many(bill)
-        return Documents(bill)
+        return Documents(iter(bill))
 
     def search(self, phone_number, period, page, limit):
         """Search by call records."""
@@ -24,4 +25,12 @@ class PhoneBill(object):
                                     phone_number=phone_number,
                                     period=period)
 
-        return Documents(self._collection.find(builded_query), page, limit)
+        documents = Documents(self._collection.find(builded_query),
+                              page,
+                              limit)
+
+        count = self._collection.count(builded_query)
+
+        page_info = paging.process_page(page, limit, count)
+
+        return (documents, page_info)

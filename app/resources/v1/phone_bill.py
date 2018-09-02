@@ -1,6 +1,8 @@
 """Module that contains call record resources."""
 from app import services
 from app.infrastructure import web
+from .contracts import build_response
+from app.services.phone_bill import DEFAULT_PAGE, DEFAULT_LIMIT
 
 
 def register(blueprint):
@@ -13,6 +15,8 @@ async def get(request, phone_number):
     service = services.PhoneBill()
 
     period = request.args.get("period")
+    page = int(request.args.get("page", DEFAULT_PAGE))
+    size = int(request.args.get("page_size", DEFAULT_LIMIT))
 
-    bill = service.list(phone_number, period)
-    return web.json(bill)
+    bill, page_info = service.list(phone_number, period, page, size)
+    return web.json(build_response(bill, page_info))

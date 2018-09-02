@@ -2,6 +2,10 @@
 from app import mongo
 from app.processors import billing
 from app.utils import datetime
+from app.processors import paging
+
+DEFAULT_PAGE = 1
+DEFAULT_LIMIT = 10
 
 
 class PhoneBill(object):
@@ -12,20 +16,21 @@ class PhoneBill(object):
         self.call_collection = mongo.CallRecord()
         self.bill_collection = mongo.PhoneBill()
 
-    def list(self, phone_number, period=None, page=1, limit=10):
+    def list(self, phone_number, period=None,
+             page=DEFAULT_PAGE, limit=DEFAULT_LIMIT):
         """Get phone bill."""
-        bill = self._get(phone_number, period, page, limit)
-        bill = list(bill)
+        bill, page_info = self._get(phone_number, period, page, limit)
 
-        if not bill:
+        if page_info["size"] and page_info["current"] == 1:
             bill = self._generate_bill(phone_number, period)
+            page_info = paging.process_page(page, limit, len(bill))
 
             if bill:
                 bill = self.create(bill)
 
-                bill = self._filter_page(bill, page, limit)
+                bill = self._filter_page(list(bill), page, limit)
 
-        return bill
+        return (bill, page_info)
 
     def _get(self, phone_number, period, page, limit):
         return self.bill_collection.search(phone_number, period, page, limit)
