@@ -1,7 +1,6 @@
 [
     {
         "$match": {
-            "source": "{{source}}",
             "timestamp": {
                 "$gte": {{start_timestamp}},
                 "$lte": {{end_timestamp}}
@@ -62,6 +61,11 @@
             "destination": {
                 "$max": "$destination"
             }
+        }
+    }, 
+    {
+        "$match": {
+            "source": {{source}}
         }
     }
 ]
