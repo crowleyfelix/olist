@@ -1,0 +1,114 @@
+[
+    {
+        "id": 0,
+        "type": "start",
+        "timestamp": 1456758000.0,
+        "call_id": 70,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 1,
+        "type": "end",
+        "timestamp": 1456765200.0,
+        "call_id": 70
+    },
+    {
+        "id": 2,
+        "type": "start",
+        "timestamp": 1513098433.0,
+        "call_id": 71,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 3,
+        "type": "end",
+        "timestamp": 1513098896.0,
+        "call_id": 71
+    },
+    {
+        "id": 4,
+        "type": "start",
+        "timestamp": 1513126076.0,
+        "call_id": 72,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 5,
+        "type": "end",
+        "timestamp": 1513126256.0,
+        "call_id": 72
+    },
+    {
+        "id": 6,
+        "type": "start",
+        "timestamp": 1513123033.0,
+        "call_id": 73,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 7,
+        "type": "end",
+        "timestamp": 1513123856.0,
+        "call_id": 73
+    },
+    {
+        "id": 8,
+        "type": "start",
+        "timestamp": 1513061833.0,
+        "call_id": 74,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 9,
+        "type": "end",
+        "timestamp": 1513066256.0,
+        "call_id": 74
+    },
+    {
+        "id": 10,
+        "type": "start",
+        "timestamp": 1513123033.0,
+        "call_id": 75,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 11,
+        "type": "end",
+        "timestamp": 1513210256.0,
+        "call_id": 75
+    },
+    {
+        "id": 12,
+        "type": "start",
+        "timestamp": 1513098478.0,
+        "call_id": 76,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 13,
+        "type": "end",
+        "timestamp": 1513098776.0,
+        "call_id": 76
+    },
+    {
+        "id": 14,
+        "type": "start",
+        "timestamp": 1519865833.0,
+        "call_id": 77,
+        "source": 99988526423,
+        "destination": 9993468278
+    },
+    {
+        "id": 15,
+        "type": "end",
+        "timestamp": 1519953056.0,
+        "call_id": 77
+    }
+]
