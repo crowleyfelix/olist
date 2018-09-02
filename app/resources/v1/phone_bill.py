@@ -9,10 +9,10 @@ def register(blueprint):
 
 
 async def get(request, phone_number):
-    """Get telephone bill."""
+    """Get phone bill."""
     service = services.PhoneBill()
 
     period = request.args.get("period")
 
-    bill = service.get(phone_number, period)
+    bill = service.list(phone_number, period)
     return web.json(bill)
