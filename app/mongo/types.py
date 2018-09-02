@@ -4,8 +4,12 @@
 class Documents(object):
     """Wrapper for mongo cursor."""
 
-    def __init__(self, cursor):
+    def __init__(self, cursor, page=None, limit=None):
         """Initialize attributes."""
+        if page and limit:
+            offset = (page-1)*limit
+            cursor = cursor.skip(offset).limit(limit)
+
         self._cursor = cursor
 
     def __iter__(self):
@@ -15,9 +19,10 @@ class Documents(object):
     def __next__(self):
         """Get next value."""
         try:
-            return Document(self._cursor.next())
+            return Document(next(self._cursor))
         except StopIteration as ex:
-            self._cursor.close()
+            if getattr(self._cursor, "close"):
+                self._cursor.close()
             raise ex
 
 

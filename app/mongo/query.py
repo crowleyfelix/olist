@@ -6,6 +6,7 @@ from app.infrastructure.configuration import get_config
 
 
 LIST_CALLS = "list-calls.query"
+FIND_PHONE_BILL = "find-phone-bill.query"
 
 _QUERIES = {}
 
