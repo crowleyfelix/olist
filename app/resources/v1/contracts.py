@@ -16,9 +16,12 @@ CALL_RECORD_REQUEST = {
 }
 
 CALL_RECORD_RESPONSE = {
-    **CALL_RECORD_REQUEST["body"],
     "id": Coalesce("id", default="todo"),
-    "type": "type"
+    "type": "type",
+    "timestamp": "timestamp",
+    "call_id": ("call_id", int),
+    "source": Coalesce("source", default=OMIT),
+    "destination": Coalesce("destination", default=OMIT)
 }
 
 PHONE_BILL_REQUEST = {
@@ -29,3 +32,11 @@ PHONE_BILL_REQUEST = {
         "limit": (Coalesce("limit", default=DEFAULT_LIMIT), int)
     }
 }
+
+PHONE_BILL_RESPONSE = [{
+    "start_date": "start_timestamp",
+    "start_time": "start_timestamp",
+    "duration":   "start_timestamp",
+    "destination": "destination",
+    "price": ("price", lambda p: p/100),
+}]

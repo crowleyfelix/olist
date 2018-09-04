@@ -32,7 +32,7 @@ class PhoneBill(object):
                 bill = self.create(bill)
 
                 LOGGER.debug("Filtering bill to requested page")
-                bill = self.paging.filter(list(bill), page, limit)
+                bill = paging.filter(list(bill), page, limit)
 
         return (bill, page_info)
 

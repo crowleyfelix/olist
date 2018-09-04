@@ -12,7 +12,7 @@ def register(blueprint):
     blueprint.add_route(get, "/phone/<phone_number>/bill")
 
 
-@auto_parse(contracts.PHONE_BILL_REQUEST, {})
+@auto_parse(contracts.PHONE_BILL_REQUEST, contracts.PHONE_BILL_RESPONSE)
 async def get(params):
     """Get phone bill."""
     LOGGER.debug("Received phone bill get request")

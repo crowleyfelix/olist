@@ -65,7 +65,7 @@
     }, 
     {
         "$match": {
-            "source": {{source}}
+            "source": "{{source}}"
         }
     }
 ]
