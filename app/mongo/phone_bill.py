@@ -16,8 +16,6 @@ class PhoneBill(object):
 
     def add(self, bill):
         """Add start or end bill."""
-        import pdb
-        pdb.set_trace()
         bill = schema.validate(bill, schema.PHONE_BILL)
         self._collection.insert_many(bill)
 

@@ -1,17 +1,10 @@
 """Module with data schemas."""
-from glom import glom, Check, OMIT
+from glom import glom, Check
 from app.models import enums
 from app.processors import validation
 
 
-def validate_phone_number(text):
-    if text:
-        return validation.phone_number(text)
-
-    return True
-
-
-CALL_RECORD = {
+CALL_RECORD_START = {
     "type": ("type.value",
              Check(validate=lambda x: enums.CallRecordType(x))),
     "timestamp": ("timestamp",
@@ -20,13 +13,26 @@ CALL_RECORD = {
                 Check(type=int)),
     "source": ("source",
                Check(type=str,
-                     default=OMIT,
-                     validate=validate_phone_number)),
+                     validate=validation.phone_number)),
     "destination": ("destination",
                     Check(type=str,
-                          default=OMIT,
-                          validate=validate_phone_number))
+                          validate=validation.phone_number))
 }
+
+CALL_RECORD_END = {
+    "type": ("type.value",
+             Check(validate=lambda x: enums.CallRecordType(x))),
+    "timestamp": ("timestamp",
+                  Check(type=float)),
+    "call_id": ("call_id",
+                Check(type=int)),
+}
+
+CALL_RECORD = {
+    enums.CallRecordType.start: CALL_RECORD_START,
+    enums.CallRecordType.end: CALL_RECORD_END
+}
+
 
 PHONE_BILL = {
     "start_timestamp": ("start_timestamp",
