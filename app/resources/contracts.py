@@ -32,7 +32,8 @@ def auto_parse(request_schema,
                     raise InvalidUsage("Invalid params sent.")
 
             result = await func(**parsed)
-            data, page_info = None
+            data = None
+            page_info = None
 
             if isinstance(result, tuple):
                 data, page_info = result

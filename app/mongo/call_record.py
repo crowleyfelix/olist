@@ -1,5 +1,5 @@
 """Module with call record repository."""
-from . import query
+from . import query, schema
 from .engine import get_collection
 from .types import Documents, Document
 
@@ -15,6 +15,7 @@ class CallRecord(object):
 
     def add(self, record):
         """Add start or end record."""
+        record = schema.validate(record, schema.CALL_RECORD)
         self._collection.insert_one(record)
         return Document(record)
 
