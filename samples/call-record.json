@@ -4,8 +4,8 @@
         "type": "start",
         "timestamp": 1456758000.0,
         "call_id": 70,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 1,
@@ -18,8 +18,8 @@
         "type": "start",
         "timestamp": 1513098433.0,
         "call_id": 71,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 3,
@@ -32,8 +32,8 @@
         "type": "start",
         "timestamp": 1513126076.0,
         "call_id": 72,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 5,
@@ -46,8 +46,8 @@
         "type": "start",
         "timestamp": 1513123033.0,
         "call_id": 73,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 7,
@@ -60,8 +60,8 @@
         "type": "start",
         "timestamp": 1513061833.0,
         "call_id": 74,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 9,
@@ -74,8 +74,8 @@
         "type": "start",
         "timestamp": 1513123033.0,
         "call_id": 75,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 11,
@@ -88,8 +88,8 @@
         "type": "start",
         "timestamp": 1513098478.0,
         "call_id": 76,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 13,
@@ -102,8 +102,8 @@
         "type": "start",
         "timestamp": 1519865833.0,
         "call_id": 77,
-        "source": 99988526423,
-        "destination": 9993468278
+        "source": "99988526423",
+        "destination": "9993468278"
     },
     {
         "id": 15,

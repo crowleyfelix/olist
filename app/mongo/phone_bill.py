@@ -2,7 +2,7 @@
 from app.processors import paging
 from .engine import get_collection
 from .types import Documents
-from . import query
+from . import query, schema
 
 COLLECTION_NAME = "phoneBill"
 
@@ -16,7 +16,11 @@ class PhoneBill(object):
 
     def add(self, bill):
         """Add start or end bill."""
+        import pdb
+        pdb.set_trace()
+        bill = schema.validate(bill, schema.PHONE_BILL)
         self._collection.insert_many(bill)
+
         return Documents(iter(bill))
 
     def search(self, phone_number, period, page, limit):

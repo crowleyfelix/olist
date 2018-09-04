@@ -65,8 +65,6 @@ class PhoneBill(object):
                 start_date, end_date)
             call["period"] = period
 
-            import pdb
-            pdb.set_trace()
             bill.append(call)
 
         return bill
