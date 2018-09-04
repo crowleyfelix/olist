@@ -1,9 +1,10 @@
 """Module with default API contracts."""
-from glom import glom
 from functools import wraps
-from app.infrastructure import web
+from glom import glom, GlomError
 from sanic.exceptions import InvalidUsage
 from munch import munchify
+from app import errors
+from app.infrastructure import web
 
 
 def auto_parse(request_schema,
@@ -17,19 +18,19 @@ def auto_parse(request_schema,
             body_schema = request_schema.get("body")
             params_schema = request_schema.get("params")
 
-            if body_schema:
-                try:
+            try:
+                if body_schema:
                     body = request.json
                     parsed["body"] = glom(body, body_schema)
-                except ValueError:
-                    raise InvalidUsage("Invalid body sent.")
 
-            if params_schema:
-                try:
+                if params_schema:
                     params = {**request.raw_args,  **kwargs}
                     parsed["params"] = munchify(glom(params, params_schema))
-                except (ValueError, KeyError):
-                    raise InvalidUsage("Invalid params sent.")
+
+            except (ValueError, KeyError):
+                raise errors.SchemaError()
+            except GlomError as ex:
+                raise errors.SchemaError(ex)
 
             result = await func(**parsed)
             data = None
