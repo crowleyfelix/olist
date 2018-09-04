@@ -1,7 +1,7 @@
 """Module that contains call record resources."""
 from app import services
-from app.infrastructure import web
-from .contracts import build_response
+from app.resources.contracts import auto_parse
+from . import contracts
 
 
 def register(blueprint):
@@ -9,15 +9,9 @@ def register(blueprint):
     blueprint.add_route(create, "/call-records", methods=['POST'])
 
 
-async def create(request):
+@auto_parse(contracts.CALL_RECORD_REQUEST,
+            contracts.CALL_RECORD_RESPONSE)
+async def create(body):
     """Create call record."""
     service = services.CallRecord()
-
-    call_record = _validate(request)
-
-    call_record = service.create(call_record)
-    return web.json(build_response(call_record))
-
-
-def _validate(request):
-    return request.json
+    return service.create(body)

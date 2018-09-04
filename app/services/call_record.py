@@ -11,5 +11,4 @@ class CallRecord(object):
 
     def create(self, record):
         """Add call record."""
-        result = self.collection.add(record)
-        return result
+        return self.collection.add(record)
