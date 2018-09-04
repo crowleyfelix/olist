@@ -18,6 +18,12 @@ def process_page(page_number, max_size, all_count):
     return page_info
 
 
+def filter(self, items, page, limit):
+    """Filter page."""
+    offset = (page-1) * limit
+    return items[offset:offset-1]
+
+
 def _calculate_page_size(page_number, max_size, all_count):
     page_size = 0
 

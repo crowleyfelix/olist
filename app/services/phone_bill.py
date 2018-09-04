@@ -13,7 +13,7 @@ class PhoneBill(object):
 
     def __init__(self):
         """Initialize attributes."""
-        self.call_collection = mongo.CallRecord()
+        self.call_collection = mongo.Call()
         self.bill_collection = mongo.PhoneBill()
 
     def list(self, phone_number, period, page, limit):
@@ -32,7 +32,7 @@ class PhoneBill(object):
                 bill = self.create(bill)
 
                 LOGGER.debug("Filtering bill to requested page")
-                bill = self._filter_page(list(bill), page, limit)
+                bill = self.paging.filter(list(bill), page, limit)
 
         return (bill, page_info)
 
@@ -53,26 +53,11 @@ class PhoneBill(object):
                          f"and phone number {phone_number}")
             start_date, end_date = datetime.begin_end_month(period)
 
-        documents = self.call_collection.search(
+        calls = self.call_collection.search(
             phone_number, start_date, end_date)
 
-        bill = []
-        for call in documents:
-
-            start_date = datetime.from_timestamp(call["start_timestamp"])
-            end_date = datetime.from_timestamp(call["end_timestamp"])
-            call["price"] = billing.process_call(
-                start_date, end_date)
-            call["period"] = period
-
-            bill.append(call)
-
-        return bill
+        return billing.process(calls, period)
 
     def create(self, bill):
         """Create bill."""
         return self.bill_collection.add(bill)
-
-    def _filter_page(self, items, page, limit):
-        offset = (page-1) * limit
-        return items[offset:offset-1]

@@ -17,8 +17,23 @@ CALL_CHARGES = [
 ]
 
 
-def process_call(start_date, end_date):
-    """Process call billing."""
+def process(calls, period):
+    """Process calls."""
+    bill = []
+    for call in calls:
+
+        start_date = datetime.from_timestamp(call["start_timestamp"])
+        end_date = datetime.from_timestamp(call["end_timestamp"])
+        call["price"] = calculate_price(start_date, end_date)
+        call["period"] = period
+
+        bill.append(call)
+
+    return bill
+
+
+def calculate_price(start_date, end_date):
+    """Process call price."""
     amount = DEFAULT_FIXED_CHARGE
 
     for charge in CALL_CHARGES:
