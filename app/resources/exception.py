@@ -18,6 +18,8 @@ def handle_all(request, exception):
     """Handle all api exceptions."""
     messages = [str(exception)]
 
+    LOGGER.warning(f"Handling with exception raised {exception}")
+
     if hasattr(exception, "status_code"):
         status_code = exception.status_code
     elif hasattr(exception, "code"):
