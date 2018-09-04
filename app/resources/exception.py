@@ -20,7 +20,7 @@ def handle_all(request, exception):
 
     if hasattr(exception, "status_code"):
         status_code = exception.status_code
-    if hasattr(exception, "code"):
+    elif hasattr(exception, "code"):
         status_code = exception.code
     else:
         config = get_config()
