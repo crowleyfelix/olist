@@ -58,7 +58,7 @@ def to_datetime(raw, fmt=DATETIME_FMT):
 def begin_end_month(period):
     """Get begin day and end day month from period."""
     begin = to_datetime(period, YEAR_MONTH_FMT)
-    end = begin + relativedelta(months=1, days=-1)
+    end = begin + relativedelta(months=1, seconds=-1)
     return (begin, end)
 
 
