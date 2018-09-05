@@ -46,8 +46,7 @@ class PhoneBill(object):
         if not period:
             LOGGER.debug("No period passed, getting previous month")
             start_date, end_date = datetime.begin_end_previous_month()
-
-            # TODO: Define period
+            period = f"{end_date.year}-{end_date.month}"
         else:
             LOGGER.debug(f"Generating bill for period {period} "
                          f"and phone number {phone_number}")
