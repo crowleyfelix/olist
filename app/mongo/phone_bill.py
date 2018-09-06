@@ -16,7 +16,7 @@ class PhoneBill(object):
 
     def add(self, bill):
         """Add start or end bill."""
-        bill = schema.validate(bill, [schema.PHONE_BILL])
+        bill = schema.parse(bill, [schema.PHONE_BILL])
         self._collection.insert_many(bill)
 
         return Documents(iter(bill))

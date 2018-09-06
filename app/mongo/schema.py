@@ -1,8 +1,8 @@
 """Module with data schemas."""
-from glom import glom, Check
+from glom import glom, Check, GlomError
 from app.models import enums
 from app.processors import validation
-
+from app.errors import SchemaError
 
 CALL_RECORD_START = {
     "type": ("type.value",
@@ -52,6 +52,11 @@ PHONE_BILL = {
 }
 
 
-def validate(data, schema):
-    """Validate data."""
-    return glom(data, schema)
+def parse(data, schema):
+    """Parse data."""
+    try:
+        return glom(data, schema)
+    except (ValueError, KeyError):
+        raise SchemaError()
+    except GlomError as ex:
+        raise SchemaError(ex)

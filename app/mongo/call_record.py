@@ -15,6 +15,6 @@ class CallRecord(object):
 
     def add(self, record):
         """Add start or end record."""
-        record = schema.validate(record, schema.CALL_RECORD[record["type"]])
+        record = schema.parse(record, schema.CALL_RECORD[record["type"]])
         self._collection.insert_one(record)
         return Document(record)
