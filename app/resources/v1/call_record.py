@@ -13,7 +13,8 @@ def register(blueprint):
 
 
 @auto_parse(contracts.CALL_RECORD_REQUEST,
-            contracts.CALL_RECORD_RESPONSE)
+            contracts.CALL_RECORD_RESPONSE,
+            status=201)
 async def post(body):
     """Create call record."""
     LOGGER.debug("Received call record post request")

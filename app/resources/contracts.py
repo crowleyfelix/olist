@@ -1,14 +1,14 @@
 """Module with default API contracts."""
 from functools import wraps
 from glom import glom, GlomError
-from sanic.exceptions import InvalidUsage
 from munch import munchify
 from app import errors
 from app.infrastructure import web
 
 
 def auto_parse(request_schema,
-               response_schema):
+               response_schema,
+               status=200):
     """Auto parse calls."""
     def wrapper(func):
         @wraps(func)
@@ -44,7 +44,7 @@ def auto_parse(request_schema,
             data = glom(data, response_schema)
 
             response = build_response(data, page_info)
-            return web.json(response)
+            return web.json(response, status)
 
         return wrapped
     return wrapper
