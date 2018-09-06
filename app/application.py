@@ -15,13 +15,18 @@ class Application(object):
         """Initialize application instance."""
         self.config = get_config()
 
+    @staticmethod
+    def build_engine():
+        """Build web server engine."""
+        engine = Engine(configure_logging=False)
+        resources.register(engine)
+        return engine
+
     def start(self):
         """Start the application."""
         LOGGER.info("Starting application")
 
-        engine = Engine(configure_logging=False)
-        resources.register(engine)
-
+        engine = self.build_engine()
         engine.run(self.config.host,
                    self.config.port,
                    debug=self.config.mode == AppMode.DEBUG,
