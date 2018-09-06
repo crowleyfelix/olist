@@ -2,9 +2,7 @@
 from app.processors import paging
 from .engine import get_collection
 from .types import Documents
-from . import query, schema
-
-COLLECTION_NAME = "phoneBill"
+from . import query, schema, constants
 
 
 class PhoneBill(object):
@@ -12,7 +10,7 @@ class PhoneBill(object):
 
     def __init__(self):
         """Initialize private attributes."""
-        self._collection = get_collection(COLLECTION_NAME)
+        self._collection = get_collection(constants.PHONE_BILL_COLLECTION)
 
     def add(self, bill):
         """Add start or end bill."""

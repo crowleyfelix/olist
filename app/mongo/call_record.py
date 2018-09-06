@@ -1,9 +1,7 @@
 """Module with call record repository."""
-from . import schema
+from . import schema, constants
 from .engine import get_collection
 from .types import Document
-
-COLLECTION_NAME = "callRecord"
 
 
 class CallRecord(object):
@@ -11,7 +9,7 @@ class CallRecord(object):
 
     def __init__(self):
         """Initialize private attributes."""
-        self._collection = get_collection(COLLECTION_NAME)
+        self._collection = get_collection(constants.CALL_RECORD_COLLECTION)
 
     def add(self, record):
         """Add start or end record."""
