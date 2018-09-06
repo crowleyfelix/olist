@@ -1,5 +1,6 @@
 """Module with exception handling logic."""
 import logging
+import traceback
 from app.infrastructure import web
 from app.infrastructure.configuration import get_config
 from app.infrastructure.enums import AppMode
@@ -26,8 +27,9 @@ def handle_all(request, exception):
         status_code = exception.code
     else:
         config = get_config()
+
         if config.mode is AppMode.DEBUG:
-            raise exception
+            messages.append(traceback.format_exc())
         else:
             messages = [HTTPStatus.INTERNAL_SERVER_ERROR.name]
 

@@ -2,7 +2,7 @@ from .error import Error
 
 
 class SchemaError(Error):
-    def __init__(glom_error=None):
+    def __init__(self, glom_error=None):
         messages = ["Invalid data passed"]
 
         if glom_error:
