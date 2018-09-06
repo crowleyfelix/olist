@@ -1,18 +1,22 @@
 """Module that contains call record resources."""
+import logging
 from app import services
-from app.infrastructure import web
+from app.resources.contracts import auto_parse
+from . import contracts
+
+LOGGER = logging.getLogger(__name__)
 
 
 def register(blueprint):
     """Register call records namespace."""
-    blueprint.add_route(create, "/call-records", methods=['POST'])
+    blueprint.add_route(post, "/call-records", methods=['POST'])
 
 
-async def create(request):
+@auto_parse(contracts.CALL_RECORD_REQUEST,
+            contracts.CALL_RECORD_RESPONSE,
+            status=201)
+async def post(body):
     """Create call record."""
+    LOGGER.debug("Received call record post request")
     service = services.CallRecord()
-
-    body = request.json
-
-    record = service.create(body)
-    return web.json(record)
+    return service.create(body)

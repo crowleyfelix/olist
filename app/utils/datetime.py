@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 DATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"
+DATE_FMT = "%Y-%m-%d"
 TIME_FMT = "%H:%M"
 YEAR_MONTH_FMT = "%Y-%m"
 
@@ -58,7 +59,7 @@ def to_datetime(raw, fmt=DATETIME_FMT):
 def begin_end_month(period):
     """Get begin day and end day month from period."""
     begin = to_datetime(period, YEAR_MONTH_FMT)
-    end = begin + relativedelta(months=1, days=-1)
+    end = begin + relativedelta(months=1, seconds=-1)
     return (begin, end)
 
 
@@ -73,3 +74,27 @@ def begin_end_previous_month():
 def from_timestamp(timestamp):
     """Convert timestamp to datetime."""
     return datetime.fromtimestamp(timestamp)
+
+
+def to_time_str(raw):
+    """Parse raw to time string."""
+    if isinstance(raw, float) or isinstance(raw, int):
+        return from_timestamp(raw).strftime(TIME_FMT)
+
+    return raw.strftime(TIME_FMT)
+
+
+def to_date_str(raw):
+    """Parse raw to date string."""
+    if isinstance(raw, float) or isinstance(raw, int):
+        return from_timestamp(raw).strftime(DATE_FMT)
+
+    return raw.strftime(DATE_FMT)
+
+
+def diff_str(start, end):
+    """Diff string."""
+    delta = from_timestamp(end) - from_timestamp(start)
+    hours, remainder = divmod(delta.total_seconds(), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(hours)}h{int(minutes)}m{int(seconds)}s"

@@ -1,9 +1,8 @@
 """Module with phone bill repository."""
+from app.processors import paging
 from .engine import get_collection
 from .types import Documents
-from . import query
-
-COLLECTION_NAME = "phoneBill"
+from . import query, schema, constants
 
 
 class PhoneBill(object):
@@ -11,12 +10,14 @@ class PhoneBill(object):
 
     def __init__(self):
         """Initialize private attributes."""
-        self._collection = get_collection(COLLECTION_NAME)
+        self._collection = get_collection(constants.PHONE_BILL_COLLECTION)
 
     def add(self, bill):
         """Add start or end bill."""
+        bill = schema.parse(bill, [schema.PHONE_BILL])
         self._collection.insert_many(bill)
-        return Documents(bill)
+
+        return Documents(iter(bill))
 
     def search(self, phone_number, period, page, limit):
         """Search by call records."""
@@ -24,4 +25,12 @@ class PhoneBill(object):
                                     phone_number=phone_number,
                                     period=period)
 
-        return Documents(self._collection.find(builded_query), page, limit)
+        documents = Documents(self._collection.find(builded_query),
+                              page,
+                              limit)
+
+        count = self._collection.count(builded_query)
+
+        page_info = paging.process(page, limit, count)
+
+        return (documents, page_info)

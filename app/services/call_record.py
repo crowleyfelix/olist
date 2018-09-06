@@ -1,5 +1,8 @@
 """Module with call record service."""
+import logging
 from app import mongo
+
+LOGGER = logging.getLogger(__name__)
 
 
 class CallRecord(object):
@@ -11,5 +14,5 @@ class CallRecord(object):
 
     def create(self, record):
         """Add call record."""
-        result = self.collection.add(record)
-        return result
+        LOGGER.debug("Creating call record")
+        return self.collection.add(record)

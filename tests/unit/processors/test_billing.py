@@ -30,8 +30,26 @@ class TestBilling(TestCase):
         self.original_charges = billing.CALL_CHARGES
         billing.CALL_CHARGES = MOCK_CHARGES
 
+    @patch("app.processors.billing.calculate_price", return_value="calculated")
+    @patch("app.utils.datetime.from_timestamp", return_value="datetime")
+    def test_process(self, mock_timestamp_parser, mock_price_calculator):
+        calls = [{"start_timestamp": "start_timestamp",
+                  "end_timestamp": "end_timestamp"}]
+
+        actual = billing.process(calls, "period")
+
+        expected = [{"start_timestamp": "start_timestamp",
+                     "end_timestamp": "end_timestamp",
+                     "price": "calculated",
+                     "period": "period"}]
+
+        mock_timestamp_parser.assert_any_call("start_timestamp")
+        mock_timestamp_parser.assert_any_call("end_timestamp")
+        mock_price_calculator.assert_called_once_with("datetime", "datetime")
+        self.assertEqual(actual, expected)
+
     @patch("app.utils.datetime.get_cycle_ocurrencies")
-    def test_process_call(self, mock_cycle_calculator: Mock):
+    def test_calculate_price(self, mock_cycle_calculator: Mock):
         start_date = "start_date"
         end_date = "end_date"
 
@@ -50,7 +68,7 @@ class TestBilling(TestCase):
                 cycles, return_value)
 
             expected = billing.DEFAULT_FIXED_CHARGE + 18
-            actual = billing.process_call(start_date, end_date)
+            actual = billing.calculate_price(start_date, end_date)
 
             self.assertEqual(actual, expected)
 
@@ -69,7 +87,7 @@ class TestBilling(TestCase):
                 cycles, return_value)
 
             expected = billing.DEFAULT_FIXED_CHARGE + 2
-            actual = billing.process_call(start_date, end_date)
+            actual = billing.calculate_price(start_date, end_date)
 
             self.assertEqual(actual, expected)
 
@@ -87,7 +105,7 @@ class TestBilling(TestCase):
                 cycles, return_value)
 
             expected = billing.DEFAULT_FIXED_CHARGE + 20
-            actual = billing.process_call(start_date, end_date)
+            actual = billing.calculate_price(start_date, end_date)
 
             self.assertEqual(actual, expected)
 

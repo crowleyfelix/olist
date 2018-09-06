@@ -1,4 +1,4 @@
 {
-    "source": {{phone_number}}, 
+    "source": "{{phone_number}}", 
     "period": "{{period}}"
 }

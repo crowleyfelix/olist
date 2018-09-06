@@ -1,9 +1,7 @@
 """Module with call record repository."""
-from . import query
+from . import schema, constants
 from .engine import get_collection
-from .types import Documents, Document
-
-COLLECTION_NAME = "callRecord"
+from .types import Document
 
 
 class CallRecord(object):
@@ -11,21 +9,10 @@ class CallRecord(object):
 
     def __init__(self):
         """Initialize private attributes."""
-        self._collection = get_collection(COLLECTION_NAME)
+        self._collection = get_collection(constants.CALL_RECORD_COLLECTION)
 
     def add(self, record):
         """Add start or end record."""
+        record = schema.parse(record, schema.CALL_RECORD[record["type"]])
         self._collection.insert_one(record)
         return Document(record)
-
-    def search(self, phone_number, start_date, end_date):
-        """Search by call records."""
-        start_timestamp = start_date.timestamp()
-        end_timestamp = end_date.timestamp()
-
-        builded_query = query.build(query.LIST_CALLS,
-                                    source=phone_number,
-                                    start_timestamp=start_timestamp,
-                                    end_timestamp=end_timestamp)
-
-        return Documents(self._collection.aggregate(builded_query))
