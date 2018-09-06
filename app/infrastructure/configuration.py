@@ -44,7 +44,7 @@ def _load_config():
         ),
 
         mongo=Munch(
-            uri=env.get("MONGO_URI", "mongodb://localhost:27017/"),
-            database=env.get("MONGO_DATABASE", "olist")
+            uri=env["MONGO_URI"],
+            database=env["MONGO_DATABASE"]
         )
     )

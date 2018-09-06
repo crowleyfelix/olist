@@ -33,6 +33,6 @@ class PhoneBill(object):
 
         count = self._collection.count(builded_query)
 
-        page_info = paging.process_page(page, limit, count)
+        page_info = paging.process(page, limit, count)
 
         return (documents, page_info)

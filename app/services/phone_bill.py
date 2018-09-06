@@ -25,7 +25,7 @@ class PhoneBill(object):
             LOGGER.debug("No bill found on first page, generating new")
 
             bill = self._generate_bill(phone_number, period)
-            page_info = paging.process_page(page, limit, len(bill))
+            page_info = paging.process(page, limit, len(bill))
 
             if bill:
                 LOGGER.debug("Creating bill")

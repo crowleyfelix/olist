@@ -92,7 +92,7 @@ def to_date_str(raw):
     return raw.strftime(DATE_FMT)
 
 
-def diff_str(end, start):
+def diff_str(start, end):
     """Diff string."""
     delta = from_timestamp(end) - from_timestamp(start)
     hours, remainder = divmod(delta.total_seconds(), 3600)

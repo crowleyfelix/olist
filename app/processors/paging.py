@@ -1,7 +1,7 @@
 """Module for pagination handlers."""
 
 
-def process_page(page_number, max_size, all_count):
+def process(page_number, max_size, all_count):
     """Process page."""
     page_info = {
         "current": page_number,
@@ -21,23 +21,20 @@ def process_page(page_number, max_size, all_count):
 def filter(items, page, limit):
     """Filter page."""
     offset = (page-1) * limit
-    return items[offset:offset-1]
+    return items[offset:offset+limit]
 
 
 def _calculate_page_size(page_number, max_size, all_count):
-    page_size = 0
 
-    if (page_number * max_size) <= all_count:
+    start_offset = (page_number-1) * max_size
+    next_offset = page_number * max_size
+    is_last_page = next_offset >= all_count
 
-        remaining_count = all_count - (page_number * max_size)
-        is_last_page = remaining_count < max_size
-
-        if is_last_page:
-            page_size = remaining_count
-        else:
-            page_size = max_size
-
-    elif max_size > all_count:
-        page_size = all_count
+    if start_offset >= all_count:
+        page_size = 0
+    elif is_last_page:
+        page_size = all_count - start_offset
+    else:
+        page_size = max_size
 
     return page_size
