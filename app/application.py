@@ -18,7 +18,7 @@ class Application(object):
     @staticmethod
     def build_engine():
         """Build web server engine."""
-        engine = Engine(configure_logging=False)
+        engine = Engine(__name__, configure_logging=False)
         resources.register(engine)
         return engine
 

@@ -10,6 +10,8 @@ services:
       - .env.example
     ports:
       - "8888:8888"
+    volumes:
+      - '.:/src'
   mongo:
     image: olist/mongo
     container_name: olist-mongo
