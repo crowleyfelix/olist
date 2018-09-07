@@ -10,7 +10,7 @@
     },
     {
         "$lookup": {
-            "from": "callRecord",
+            "from": "callRecords",
             "localField": "call_id",
             "foreignField": "call_id",
             "as": "record"
