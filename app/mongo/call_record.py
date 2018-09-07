@@ -1,4 +1,6 @@
 """Module with call record repository."""
+from pymongo.errors import DuplicateKeyError
+from app import errors
 from . import schema, constants
 from .engine import get_collection
 from .types import Document
@@ -14,5 +16,8 @@ class CallRecord(object):
     def add(self, record):
         """Add start or end record."""
         record = schema.parse(record, schema.CALL_RECORD[record["type"]])
-        self._collection.insert_one(record)
+        try:
+            self._collection.insert_one(record)
+        except DuplicateKeyError:
+            raise errors.UnprocessableDataError("Call record already exists")
         return Document(record)

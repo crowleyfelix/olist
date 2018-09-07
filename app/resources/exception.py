@@ -23,8 +23,6 @@ def handle_all(request, exception):
 
     if hasattr(exception, "status_code"):
         status_code = exception.status_code
-    elif hasattr(exception, "code"):
-        status_code = exception.code
     else:
         config = get_config()
 

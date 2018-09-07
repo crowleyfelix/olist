@@ -1,4 +1,6 @@
 """Module with phone bill repository."""
+from pymongo.errors import DuplicateKeyError
+from app import errors
 from app.processors import paging
 from .engine import get_collection
 from .types import Documents
@@ -15,7 +17,10 @@ class PhoneBill(object):
     def add(self, bill):
         """Add start or end bill."""
         bill = schema.parse(bill, [schema.PHONE_BILL])
-        self._collection.insert_many(bill)
+        try:
+            self._collection.insert_many(bill)
+        except DuplicateKeyError:
+            raise errors.UnprocessableDataError("Phone bill already exists")
 
         return Documents(iter(bill))
 
