@@ -1,17 +1,16 @@
 """Module with call record repository."""
 from pymongo.errors import DuplicateKeyError
 from app import errors
-from . import schema, constants
-from .engine import get_collection
+from . import schema
 from .types import Document
 
 
 class CallRecord(object):
     """A repository for call record operations."""
 
-    def __init__(self):
+    def __init__(self, collection):
         """Initialize private attributes."""
-        self._collection = get_collection(constants.CALL_RECORD_COLLECTION)
+        self._collection = collection
 
     def add(self, record):
         """Add start or end record."""

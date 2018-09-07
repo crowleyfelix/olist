@@ -1,15 +1,14 @@
 """Module with call repository."""
-from . import query, constants, schema
-from .engine import get_collection
+from . import query, schema
 from .types import Documents
 
 
 class Call(object):
     """A repository for call operations."""
 
-    def __init__(self):
+    def __init__(self, collection):
         """Initialize private attributes."""
-        self._collection = get_collection(constants.CALL_RECORD_COLLECTION)
+        self._collection = collection
 
     def search(self, phone_number, start_date, end_date):
         """Search by call records."""

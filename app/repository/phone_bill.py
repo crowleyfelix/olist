@@ -2,17 +2,16 @@
 from pymongo.errors import DuplicateKeyError
 from app import errors
 from app.processors import paging
-from .engine import get_collection
 from .types import Documents
-from . import query, schema, constants
+from . import query, schema
 
 
 class PhoneBill(object):
     """A repository phone bill operations."""
 
-    def __init__(self):
+    def __init__(self, collection):
         """Initialize private attributes."""
-        self._collection = get_collection(constants.PHONE_BILL_COLLECTION)
+        self._collection = collection
 
     def add(self, bill):
         """Add start or end bill."""
