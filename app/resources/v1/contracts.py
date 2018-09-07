@@ -17,7 +17,7 @@ CALL_RECORD_REQUEST = {
 }
 
 CALL_RECORD_RESPONSE = {
-    "id": Coalesce("id", default="todo"),
+    "id": "id",
     "type": "type",
     "timestamp": "timestamp",
     "call_id": ("call_id", int),

@@ -15,9 +15,10 @@ class CallRecord(object):
 
     def add(self, record):
         """Add start or end record."""
-        record = schema.parse(record, schema.CALL_RECORD[record["type"]])
+        record_schema = schema.CALL_RECORD[record["type"]]
+        record = schema.parse(record, record_schema)
         try:
             self._collection.insert_one(record)
+            return Document(record, record_schema)
         except DuplicateKeyError:
             raise errors.UnprocessableDataError("Call record already exists")
-        return Document(record)

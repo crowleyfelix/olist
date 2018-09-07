@@ -1,5 +1,5 @@
 """Module with call repository."""
-from . import query, constants
+from . import query, constants, schema
 from .engine import get_collection
 from .types import Documents
 
@@ -16,9 +16,11 @@ class Call(object):
         start_timestamp = start_date.timestamp()
         end_timestamp = end_date.timestamp()
 
+        call_schema = schema.CALL
         builded_query = query.build(query.LIST_CALLS,
                                     source=phone_number,
                                     start_timestamp=start_timestamp,
                                     end_timestamp=end_timestamp)
 
-        return Documents(self._collection.aggregate(builded_query))
+        return Documents(self._collection.aggregate(builded_query),
+                         call_schema)

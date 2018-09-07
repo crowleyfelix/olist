@@ -1,11 +1,17 @@
 """Module with data schemas."""
-from glom import glom, Check, GlomError
+from glom import glom, Check, GlomError, Coalesce, OMIT
 from app.models import enums
 from app.processors import validation
 from app.errors import SchemaError
 
+
+def parse_id(t):
+    return str(t) if t is not OMIT else OMIT
+
+
 CALL_RECORD_START = {
-    "type": ("type.value",
+    "id": (Coalesce("_id", default=OMIT), parse_id),
+    "type": (Coalesce("type.value", "type"),
              Check(validate=lambda x: enums.CallRecordType(x))),
     "timestamp": ("timestamp",
                   Check(type=float)),
@@ -17,10 +23,13 @@ CALL_RECORD_START = {
     "destination": ("destination",
                     Check(type=str,
                           validate=validation.phone_number))
+
+
 }
 
 CALL_RECORD_END = {
-    "type": ("type.value",
+    "id": (Coalesce("_id", default=OMIT), parse_id),
+    "type": (Coalesce("type.value", "type"),
              Check(validate=lambda x: enums.CallRecordType(x))),
     "timestamp": ("timestamp",
                   Check(type=float)),
@@ -34,7 +43,24 @@ CALL_RECORD = {
 }
 
 
+CALL = {
+    "call_id": ("_id",
+                Check(type=int)),
+    "start_timestamp": ("start_timestamp",
+                        Check(type=float)),
+    "end_timestamp": ("end_timestamp",
+                      Check(type=float)),
+    "source": ("source",
+               Check(type=str,
+                     validate=validation.phone_number)),
+    "destination": ("destination",
+                    Check(type=str,
+                          validate=validation.phone_number)),
+}
+
 PHONE_BILL = {
+    "call_id": ("call_id",
+                Check(type=int)),
     "start_timestamp": ("start_timestamp",
                         Check(type=float)),
     "end_timestamp": ("end_timestamp",

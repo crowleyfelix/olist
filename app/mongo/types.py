@@ -1,16 +1,18 @@
 """Module for mongo types."""
+from . import schema
 
 
 class Documents(object):
     """Wrapper for mongo cursor."""
 
-    def __init__(self, cursor, page=None, limit=None):
+    def __init__(self, cursor, schema, page=None, limit=None):
         """Initialize attributes."""
         if page and limit:
             offset = (page-1)*limit
             cursor = cursor.skip(offset).limit(limit)
 
         self._cursor = cursor
+        self._schema = schema
 
     def __iter__(self):
         """Get iterable."""
@@ -19,7 +21,7 @@ class Documents(object):
     def __next__(self):
         """Get next value."""
         try:
-            return Document(next(self._cursor))
+            return Document(next(self._cursor), self._schema)
         except StopIteration as ex:
             if hasattr(self._cursor, "close"):
                 self._cursor.close()
@@ -29,7 +31,6 @@ class Documents(object):
 class Document(dict):
     """Wrapper for mongo document."""
 
-    def __init__(self, raw):
+    def __init__(self, raw, doc_schema):
         """Initialize attributes."""
-        raw.pop("_id")
-        self.update(**raw)
+        self.update(**schema.parse(raw, doc_schema))
