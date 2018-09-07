@@ -16,7 +16,7 @@ def register(blueprint):
 async def get(params):
     """Get phone bill."""
     LOGGER.debug("Received phone bill get request")
-    service = services.PhoneBill()
+    service = services.build_phone_bill()
     return service.list(params.phone_number,
                         params.period,
                         params.page,

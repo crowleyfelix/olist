@@ -1,11 +1,12 @@
 """Module with call record service."""
 import logging
 from app import repository
+from app.infrastructure.singleton import Singleton
 
 LOGGER = logging.getLogger(__name__)
 
 
-class CallRecord(object):
+class CallRecord(metaclass=Singleton):
     """Class for call record operations."""
 
     def __init__(self):

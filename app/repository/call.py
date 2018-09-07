@@ -1,9 +1,10 @@
 """Module with call repository."""
+from app.infrastructure.singleton import Singleton
 from . import query, schema
 from .types import Documents
 
 
-class Call(object):
+class Call(metaclass=Singleton):
     """A repository for call operations."""
 
     def __init__(self, collection):

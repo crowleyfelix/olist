@@ -1,11 +1,12 @@
 """Module with call record repository."""
 from pymongo.errors import DuplicateKeyError
 from app import errors
+from app.infrastructure.singleton import Singleton
 from . import schema
 from .types import Document
 
 
-class CallRecord(object):
+class CallRecord(metaclass=Singleton):
     """A repository for call record operations."""
 
     def __init__(self, collection):

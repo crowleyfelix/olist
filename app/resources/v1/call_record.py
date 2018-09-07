@@ -18,5 +18,5 @@ def register(blueprint):
 async def post(body):
     """Create call record."""
     LOGGER.debug("Received call record post request")
-    service = services.CallRecord()
+    service = services.build_call_record()
     return service.create(body)

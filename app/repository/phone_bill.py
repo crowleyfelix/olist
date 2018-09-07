@@ -1,12 +1,13 @@
 """Module with phone bill repository."""
 from pymongo.errors import DuplicateKeyError
+from app.infrastructure.singleton import Singleton
 from app import errors
 from app.processors import paging
 from .types import Documents
 from . import query, schema
 
 
-class PhoneBill(object):
+class PhoneBill(metaclass=Singleton):
     """A repository phone bill operations."""
 
     def __init__(self, collection):

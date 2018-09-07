@@ -4,11 +4,12 @@ from app import repository, errors
 from app.processors import billing, validation
 from app.utils import datetime
 from app.processors import paging
+from app.infrastructure.singleton import Singleton
 
 LOGGER = logging.getLogger(__name__)
 
 
-class PhoneBill(object):
+class PhoneBill(metaclass=Singleton):
     """Class for billing operations."""
 
     def __init__(self):
