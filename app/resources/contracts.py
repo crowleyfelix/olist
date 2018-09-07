@@ -38,6 +38,9 @@ def auto_parse(request_schema,
 
             if isinstance(result, tuple):
                 data, page_info = result
+
+                if not page_info["size"]:
+                    errors.NotFoundError()
             else:
                 data = result
 

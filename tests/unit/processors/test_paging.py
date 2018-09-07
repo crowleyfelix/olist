@@ -46,7 +46,7 @@ class TestPaging(TestCase):
                     "previous": 3,
                 })
 
-        with self.subTest("when max size is less than all count"):
+        with self.subTest("when max size is lower than all count"):
             self.assertEqual(
                 paging.process(1, 10, 6),
                 {
