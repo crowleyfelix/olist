@@ -6,6 +6,7 @@ from app.errors import SchemaError
 
 
 def parse_id(t):
+    """Parse mongo id."""
     return str(t) if t is not OMIT else OMIT
 
 
