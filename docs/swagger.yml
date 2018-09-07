@@ -1,0 +1,134 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Olist"
+basePath: "/api/v1"
+schemes:
+- "http"
+tags:
+- name: "callRecord"
+  description: "Calls record"
+- name: "phoneBill"
+  description: "Phone Bill"
+
+paths:
+  /call-records:
+
+    post:
+      summary: "Create call record"
+      tags:
+        - "callRecord"
+      operationId: "createCallRecord"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Call Record"
+          schema:
+            $ref: "#/definitions/CallRecord"
+      responses:
+        201:
+          description: "Call record created with success"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CallRecord"
+        400:
+          description: "Invalid data passed"
+          schema:
+            $ref: "#/definitions/Response"
+        422:
+          description: "Call record already exists"
+          schema:
+            $ref: "#/definitions/Response"
+                    
+  /phone/{phone_number}/bills/{period}:
+  
+    get:
+      summary: "Get phone bill"
+      tags:
+        - "phoneBill"
+      operationId: "getPhoneBill"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "phone_number"
+          description: "The subscriber phone number"
+          required: true
+        - in: "path"
+          name: "period"
+          description: "The consumption period"
+          required: true
+          pattern: '^\d{4}-\d{2}'
+      responses:
+        200:
+          description: "Bill found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/PhoneBill"
+        404:
+          description: "Bill not found"
+          schema:
+            $ref: "#/definitions/Response"
+
+
+definitions:
+  Response:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+      messages:
+        type: "array"
+        items:
+          type: "string"
+  
+  CallRecord:
+    type: "object"
+    required: 
+      - "call_id"
+      - "type"
+      - "timestamp"
+    properties:
+      id:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+          - "start"
+          - "end"
+      timestamp:
+        type: "number"
+      call_id:
+        type: "integer"
+      source:
+        type: "string"
+      destination:
+        type: "string"
+
+  PhoneBill:
+    type: "object"
+    properties:
+      start_date:
+        type: "string"
+      start_time:
+        type: "string"
+      duration:
+        type: "string"
+      destination:
+        type: "string"
+      price:
+        type: "number"
+  
+    

@@ -11,7 +11,7 @@ After clonning these repository, you'll need the following tools.
 
 ## Virtual environment
 
-Using a tool called [pipenv], you could either managing your dependencies and virtual environments for the project.
+Using a tool called [pipenv], you can either managing your dependencies and virtual environments of the project.
 
 Pipenv automatic loads environment variables from a [.env] in root project. So, set up the variables described on .env.example in a new file.
 
@@ -35,7 +35,7 @@ pipenv shell
 
 **Pipenv only supports Linux. To other systems you should use pip with other virtual environment manager, and set environment variables in your terminal session.**
 
-# Linting
+## Linting
 
 The linting tooling is provided by [pylama] wich is a wrapper that group all python popular linters. Some text editors provide a configuration to automatize the pylama executions and expose the messages. Please, check yours text editor docs for more details.
 
@@ -45,23 +45,31 @@ To mannualy execute pylama:
 pylama
 ```
 
-# Running tests
+## Running tests
 
-To run all tests 
+To run all tests
 
-`pytest`
+```shell
+pytest
+```
 
 To run unit tests:
 
-`pytest tests/unit`
+```shell
+pytest tests/unit
+```
 
 To run integration tests:
 
-`pytest tests/integration -sv`
+```shell
+pytest tests/integration -sv
+```
 
 To run coverage report:
 
-`pytest --cov=app --cov-report html`
+```shell
+pytest --cov=app --cov-report html
+```
 
 **The coverage report is generated in htmlcov folder**
 
