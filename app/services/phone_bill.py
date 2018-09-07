@@ -1,7 +1,7 @@
 """Module with bill service."""
 import logging
-from app import mongo
-from app.processors import billing
+from app import mongo, errors
+from app.processors import billing, validation
 from app.utils import datetime
 from app.processors import paging
 
@@ -50,6 +50,8 @@ class PhoneBill(object):
         else:
             LOGGER.debug(f"Generating bill for period {period} "
                          f"and phone number {phone_number}")
+            if not validation.year_month(period):
+                raise errors.SchemaError("Invalid period format")
             start_date, end_date = datetime.begin_end_month(period)
 
         calls = self.call_collection.search(
