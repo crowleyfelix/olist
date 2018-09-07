@@ -68,6 +68,12 @@ paths:
           description: "The consumption period"
           required: true
           pattern: '^\d{4}-\d{2}'
+        - in: "query"
+          name: "page"
+          description: "The page number"
+        - in: "query"
+          name: "limit"
+          description: "The number of items per page"
       responses:
         200:
           description: "Bill found"
