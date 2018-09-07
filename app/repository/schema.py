@@ -24,8 +24,6 @@ CALL_RECORD_START = {
     "destination": ("destination",
                     Check(type=str,
                           validate=validation.phone_number))
-
-
 }
 
 CALL_RECORD_END = {

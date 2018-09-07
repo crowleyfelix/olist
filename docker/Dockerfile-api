@@ -9,6 +9,6 @@ WORKDIR /src/
 RUN \
     pip install --upgrade pip; \
     pip install pipenv; \
-    pipenv install;
+    pipenv install --system --deploy --verbose;
 
 CMD pipenv run python -m app
