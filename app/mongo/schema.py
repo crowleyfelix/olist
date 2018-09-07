@@ -59,6 +59,7 @@ CALL = {
 }
 
 PHONE_BILL = {
+    "id": (Coalesce("_id", default=OMIT), parse_id),
     "call_id": ("call_id",
                 Check(type=int)),
     "start_timestamp": ("start_timestamp",
@@ -85,4 +86,4 @@ def parse(data, schema):
     except (ValueError, KeyError):
         raise SchemaError()
     except GlomError as ex:
-        raise SchemaError(ex)
+        raise SchemaError(glom_error=ex)

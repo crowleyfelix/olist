@@ -35,6 +35,7 @@ PHONE_BILL_REQUEST = {
 }
 
 PHONE_BILL_RESPONSE = [{
+    "id": "id",
     "start_date": ("start_timestamp", datetime.to_date_str),
     "start_time": ("start_timestamp", datetime.to_time_str),
     "duration":   Call(datetime.diff_str,
