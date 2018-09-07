@@ -10,6 +10,6 @@ class TestValidation(TestCase):
         self.assertFalse(validation.phone_number("01234567890x"))
 
     def test_year_month(self):
-        self.assertTrue(validation.year_month("2018-09"))
-        self.assertFalse(validation.year_month("201809"))
-        self.assertFalse(validation.year_month("2018-22"))
+        self.assertTrue(validation.period_format("2018-09"))
+        self.assertFalse(validation.period_format("201809"))
+        self.assertFalse(validation.period_format("2018-22"))

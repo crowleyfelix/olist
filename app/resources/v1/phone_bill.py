@@ -9,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 
 def register(blueprint):
     """Register call records namespace."""
-    blueprint.add_route(get, "/phones/<phone_number>/bills/<period>")
+    blueprint.add_route(get, "/phones/<phone_number>/bills")
 
 
 @auto_parse(contracts.PHONE_BILL_REQUEST, contracts.PHONE_BILL_RESPONSE)

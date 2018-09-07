@@ -51,8 +51,11 @@ class PhoneBill(metaclass=Singleton):
         else:
             LOGGER.debug(f"Generating bill for period {period} "
                          f"and phone number {phone_number}")
-            if not validation.year_month(period):
+            if not validation.period_format(period):
                 raise errors.SchemaError("Invalid period format")
+            if not validation.closed_bill_period(period):
+                raise errors.UnprocessableDataError("Period not closed")
+
             start_date, end_date = datetime.begin_end_month(period)
 
         calls = self.call_repository.search(

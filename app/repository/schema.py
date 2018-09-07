@@ -74,7 +74,7 @@ PHONE_BILL = {
     "price": ("price", int),
     "period": ("period",
                Check(type=str,
-                     validate=validation.year_month))
+                     validate=validation.period_format))
 }
 
 
