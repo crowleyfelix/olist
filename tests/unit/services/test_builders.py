@@ -6,6 +6,10 @@ from app.services.phone_bill import PhoneBill
 
 
 class TestBuilders(TestCase):
+    def setUp(self):
+        CallRecord._instance = None
+        PhoneBill._instance = None
+
     def test_build_call_record(self):
         actual = builders.build_call_record()
         self.assertIsInstance(actual, CallRecord)

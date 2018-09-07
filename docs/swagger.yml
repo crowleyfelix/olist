@@ -47,7 +47,7 @@ paths:
           schema:
             $ref: "#/definitions/Response"
                     
-  /phone/{phone_number}/bills/{period}:
+  /phones/{phone_number}/bills/{period}:
   
     get:
       summary: "Get phone bill"

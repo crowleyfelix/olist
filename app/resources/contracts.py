@@ -40,7 +40,7 @@ def auto_parse(request_schema,
                 data, page_info = result
 
                 if not page_info["size"]:
-                    errors.NotFoundError()
+                    raise errors.NotFoundError()
             else:
                 data = result
 

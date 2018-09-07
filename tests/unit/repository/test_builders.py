@@ -7,6 +7,11 @@ from app.repository.phone_bill import PhoneBill
 
 
 class TestBuilders(TestCase):
+    def setUp(self):
+        Call._instance = None
+        CallRecord._instance = None
+        PhoneBill._instance = None
+
     @patch("app.repository.mongo.get_collection", return_value="collection")
     @patch.object(CallRecord, "__init__", return_value=None)
     def test_build_call_record(self, mock_repo_init, mock_getter):

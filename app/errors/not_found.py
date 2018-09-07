@@ -8,4 +8,4 @@ class NotFoundError(Error):
     def __init__(self, message=None):
         """Initialize attributes."""
         message = message or "Not found"
-        super(NotFoundError, self).__init__(message, 400)
+        super(NotFoundError, self).__init__(message, 404)
