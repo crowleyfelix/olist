@@ -7,3 +7,4 @@ class AppMode(Enum):
 
     DEBUG = 1
     RELEASE = 2
+    TEST = 3

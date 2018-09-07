@@ -1,20 +1,21 @@
 """Module with bill service."""
 import logging
-from app import mongo
-from app.processors import billing
+from app import repository, errors
+from app.processors import billing, validation
 from app.utils import datetime
 from app.processors import paging
+from app.infrastructure.singleton import Singleton
 
 LOGGER = logging.getLogger(__name__)
 
 
-class PhoneBill(object):
+class PhoneBill(metaclass=Singleton):
     """Class for billing operations."""
 
     def __init__(self):
         """Initialize attributes."""
-        self.call_collection = mongo.Call()
-        self.bill_collection = mongo.PhoneBill()
+        self.call_repository = repository.build_call()
+        self.bill_repository = repository.build_phone_bill()
 
     def list(self, phone_number, period, page, limit):
         """Get phone bill."""
@@ -37,7 +38,7 @@ class PhoneBill(object):
         return (bill, page_info)
 
     def _get(self, phone_number, period, page, limit):
-        return self.bill_collection.search(phone_number, period, page, limit)
+        return self.bill_repository.search(phone_number, period, page, limit)
 
     def _generate_bill(self, phone_number, period):
         start_date = None
@@ -50,13 +51,18 @@ class PhoneBill(object):
         else:
             LOGGER.debug(f"Generating bill for period {period} "
                          f"and phone number {phone_number}")
+            if not validation.period_format(period):
+                raise errors.SchemaError("Invalid period format")
+            if not validation.closed_bill_period(period):
+                raise errors.UnprocessableDataError("Period not closed")
+
             start_date, end_date = datetime.begin_end_month(period)
 
-        calls = self.call_collection.search(
+        calls = self.call_repository.search(
             phone_number, start_date, end_date)
 
         return billing.process(calls, period)
 
     def create(self, bill):
         """Create bill."""
-        return self.bill_collection.add(bill)
+        return self.bill_repository.add(bill)

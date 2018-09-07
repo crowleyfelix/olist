@@ -30,7 +30,7 @@ def auto_parse(request_schema,
             except (ValueError, KeyError):
                 raise errors.SchemaError()
             except GlomError as ex:
-                raise errors.SchemaError(ex)
+                raise errors.SchemaError(glom_error=ex)
 
             result = await func(**parsed)
             data = None
@@ -38,6 +38,9 @@ def auto_parse(request_schema,
 
             if isinstance(result, tuple):
                 data, page_info = result
+
+                if not page_info["size"]:
+                    raise errors.NotFoundError()
             else:
                 data = result
 

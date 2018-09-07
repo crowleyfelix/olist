@@ -48,3 +48,9 @@ def _load_config():
             database=env["MONGO_DATABASE"]
         )
     )
+
+
+def set_test_mode():
+    """Set application test mode."""
+    config = get_config()
+    config.mode = AppMode.TEST

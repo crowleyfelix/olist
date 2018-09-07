@@ -1,31 +1,38 @@
 """Module with phone bill repository."""
+from pymongo.errors import DuplicateKeyError
+from app.infrastructure.singleton import Singleton
+from app import errors
 from app.processors import paging
-from .engine import get_collection
 from .types import Documents
-from . import query, schema, constants
+from . import query, schema
 
 
-class PhoneBill(object):
+class PhoneBill(metaclass=Singleton):
     """A repository phone bill operations."""
 
-    def __init__(self):
+    def __init__(self, collection):
         """Initialize private attributes."""
-        self._collection = get_collection(constants.PHONE_BILL_COLLECTION)
+        self._collection = collection
 
     def add(self, bill):
         """Add start or end bill."""
-        bill = schema.parse(bill, [schema.PHONE_BILL])
-        self._collection.insert_many(bill)
-
-        return Documents(iter(bill))
+        bill_schema = schema.PHONE_BILL
+        bill = schema.parse(bill, [bill_schema])
+        try:
+            self._collection.insert_many(bill)
+            return Documents(iter(bill), bill_schema)
+        except DuplicateKeyError:
+            raise errors.UnprocessableDataError("Phone bill already exists")
 
     def search(self, phone_number, period, page, limit):
         """Search by call records."""
+        bill_schema = schema.PHONE_BILL
         builded_query = query.build(query.FIND_PHONE_BILL,
                                     phone_number=phone_number,
                                     period=period)
 
         documents = Documents(self._collection.find(builded_query),
+                              bill_schema,
                               page,
                               limit)
 

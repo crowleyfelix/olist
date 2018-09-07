@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    image: olist/web
+    container_name: olist-web
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-api
+    env_file:
+      - .env.example
+    ports:
+      - "8888:8888"
+    volumes:
+      - '.:/src'
+  mongo:
+    image: olist/mongo
+    container_name: olist-mongo
+    logging:
+      driver: none
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-mongo
+    hostname: mongo
+    ports:
+      - 27017:27017
+      - 28017:28017      

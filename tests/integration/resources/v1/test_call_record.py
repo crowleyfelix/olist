@@ -1,14 +1,15 @@
 import json
-from unittest import TestCase
+from tests.integration.base import BaseSuite
 from app.infrastructure.web import Engine, Blueprint
 from app.application import Application
 from app.resources.v1 import call_record
+from app.repository import mongo, constants
 from . import fixtures
 
-POST_ENDPOINT = "/v1/call-records"
+POST_ENDPOINT = "/api/v1/call-records"
 
 
-class TestCallRecord(TestCase):
+class TestCallRecord(BaseSuite):
     def setUp(self):
         self.engine = Application.build_engine()
 
@@ -41,4 +42,10 @@ class TestCallRecord(TestCase):
                                                            data=data)
 
                 self.assertEqual(response.status, 201)
-                self.assertEqual(response.json["data"], pld)
+                actual = response.json["data"]
+                pld.update(id=actual["id"])
+                self.assertEqual(actual, pld)
+
+    def tearDown(self):
+        collection = mongo.get_collection(constants.CALL_RECORD_COLLECTION)
+        collection.remove({})

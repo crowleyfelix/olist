@@ -18,6 +18,7 @@ pytest = "*"
 pytest-cov = "*"
 "autopep8" = "*"
 rope = "*"
+aiohttp = "*"
 
 
 [packages]
@@ -29,4 +30,3 @@ python-dateutil = "*"
 pandas = "*"
 pystache = "*"
 glom = "*"
-aiohttp = "*"
