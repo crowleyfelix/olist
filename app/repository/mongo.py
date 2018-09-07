@@ -22,3 +22,18 @@ def get_collection(name):
         _COLLECTIONS[name] = database[name]
 
     return _COLLECTIONS[name]
+
+
+def is_ok():
+    """Verify if mongo is ok."""
+    config = get_config()
+    mongo_config = config.mongo
+    database = mongo_config.database
+    conn = pymongo.MongoClient(mongo_config.uri)
+    database = conn[database]
+
+    try:
+        database.command("ping")
+        return True
+    except Exception:
+        return False
