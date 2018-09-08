@@ -23,7 +23,7 @@ aiohttp = "*"
 
 [packages]
 
-sanic = "*"
+sanic = "==0.7.0"
 munch = "*"
 pymongo = "*"
 python-dateutil = "*"
