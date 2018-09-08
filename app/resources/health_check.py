@@ -11,7 +11,7 @@ _DEPENDENCIES = {
 
 def register(engine):
     """Register health check routes."""
-    engine.add_route(health_check, "/health-check")
+    engine.add_route(health_check, "/")
 
 
 async def health_check(request):
