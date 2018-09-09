@@ -8,4 +8,4 @@ def register(engine: Sanic):
     blueprint = Blueprint(__name__, url_prefix="/api/v1")
     call_record.register(blueprint)
     phone_bill.register(blueprint)
-    engine.register_blueprint(blueprint)
+    engine.blueprint(blueprint)

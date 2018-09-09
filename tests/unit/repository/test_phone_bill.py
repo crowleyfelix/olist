@@ -54,7 +54,7 @@ class TestPhoneBill(TestCase):
         limit = 10
 
         self.mock_collection.find.return_value = "data"
-        self.mock_collection.count.return_value = 100
+        self.mock_collection.count_documents.return_value = 100
 
         self.repository.search(phone_number, period, page, limit)
 

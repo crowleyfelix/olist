@@ -2,9 +2,10 @@ swagger: "2.0"
 info:
   version: "1.0.0"
   title: "Olist"
-basePath: "/api/v1"
 schemes:
-- "http"
+- "https"
+host: olist-call-recorder.herokuapp.com 
+basePath: "/api/v1"
 tags:
 - name: "callRecord"
   description: "Calls record"

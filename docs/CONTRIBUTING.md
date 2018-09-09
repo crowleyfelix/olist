@@ -27,7 +27,7 @@ Installing application and development dependencies.
 pipenv install -d
 ```
 
-With the follow command you will access the virtual environment:
+With the following command you will access the virtual environment:
 
 ```shell
 pipenv shell
@@ -47,11 +47,6 @@ pylama
 
 ## Running tests
 
-To run all tests
-
-```shell
-pytest
-```
 
 To run unit tests:
 
@@ -65,11 +60,20 @@ To run integration tests:
 pytest tests/integration -sv
 ```
 
+**Be noticed that you'll need to have a mongo running to run integration tests. You could use the mongo provided by docker-compose, and set environment variable MONGO_URI pointing to localhost as host, instead of mongo as host.**
+
+To run all tests
+
+```shell
+pytest
+```
+
 To run coverage report:
 
 ```shell
 pytest --cov=app --cov-report html
 ```
+
 
 **The coverage report is generated in htmlcov folder**
 
