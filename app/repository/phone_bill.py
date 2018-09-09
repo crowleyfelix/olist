@@ -36,7 +36,7 @@ class PhoneBill(metaclass=Singleton):
                               page,
                               limit)
 
-        count = self._collection.count(builded_query)
+        count = self._collection.count_documents(builded_query)
 
         page_info = paging.process(page, limit, count)
 

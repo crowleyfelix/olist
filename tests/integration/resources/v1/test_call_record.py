@@ -48,4 +48,4 @@ class TestCallRecord(BaseSuite):
 
     def tearDown(self):
         collection = mongo.get_collection(constants.CALL_RECORD_COLLECTION)
-        collection.remove({})
+        collection.delete_many({})
