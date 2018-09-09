@@ -27,10 +27,8 @@ def auto_parse(request_schema,
                     params = {**request.raw_args,  **kwargs}
                     parsed["params"] = munchify(glom(params, params_schema))
 
-            except (ValueError, KeyError):
+            except (ValueError, KeyError, GlomError):
                 raise errors.SchemaError()
-            except GlomError as ex:
-                raise errors.SchemaError(glom_error=ex)
 
             result = await func(**parsed)
             data = None
