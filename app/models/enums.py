@@ -7,3 +7,10 @@ class CallRecordType(Enum):
 
     start = "start"
     end = "end"
+
+
+class ChargeStrategy(Enum):
+    """Enumerator of charge strategy types."""
+
+    homogeneous = 1
+    heterogeneous = 2
