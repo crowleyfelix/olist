@@ -82,7 +82,5 @@ def parse(data, schema):
     """Parse data."""
     try:
         return glom(data, schema)
-    except (ValueError, KeyError):
+    except (ValueError, KeyError, GlomError):
         raise SchemaError()
-    except GlomError as ex:
-        raise SchemaError(glom_error=ex)
