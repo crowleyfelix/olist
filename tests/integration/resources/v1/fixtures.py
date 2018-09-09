@@ -22,5 +22,5 @@ def phone_bill():
         "start_time": "21:57",
         "duration": "24h13m43s",
         "destination": "9993468278",
-        "price": 86.94
+        "price": 131.13
     }

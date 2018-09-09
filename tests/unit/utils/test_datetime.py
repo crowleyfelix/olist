@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 from app.utils import datetime
+from tests.utils import parse_time, parse_datetime
 from . import fixtures
 
 
@@ -23,6 +24,21 @@ class TestDateTime(TestCase):
                     start_range, end_range, start_cycle, end_cycle)
 
                 self.assertEqual(actual, expected)
+
+    def test_is_between_time(self):
+        start_time = parse_time("22:00")
+        end_time = parse_time("06:00")
+
+        self.assertFalse(datetime.is_between_time(
+            parse_datetime("2018-02-28T21:57:13Z"), start_time, end_time))
+        self.assertTrue(datetime.is_between_time(
+            parse_datetime("2018-02-28T22:00:00Z"), start_time, end_time))
+        self.assertTrue(datetime.is_between_time(
+            parse_datetime("2018-02-28T00:00:00Z"), start_time, end_time))
+        self.assertTrue(datetime.is_between_time(
+            parse_datetime("2018-02-28T06:00:00Z"), start_time, end_time))
+        self.assertFalse(datetime.is_between_time(
+            parse_datetime("2018-02-28T06:01:00Z"), start_time, end_time))
 
     def test_to_datetime(self):
         actual = datetime.to_datetime("2018-02-28T21:57:13Z")

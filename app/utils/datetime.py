@@ -1,6 +1,6 @@
 """Module with datetime processors."""
 import pandas
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 
 DATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"
@@ -15,6 +15,17 @@ def date_range(start, end):
 
     while cursor < end:
         yield cursor
+        cursor += timedelta(minutes=1, seconds=-cursor.second)
+
+    yield end
+
+
+def time_range(start, end):
+    """Create time range."""
+    cursor = datetime.combine(date.today(), start)
+
+    while not cursor.time() == end:
+        yield cursor.time()
         cursor += timedelta(minutes=1, seconds=-cursor.second)
 
     yield end
@@ -44,6 +55,16 @@ def get_cycle_ocurrencies(start_range, end_range,
             started_cycle = None
 
     return ocurrencies
+
+
+def is_between_time(date, start_range, end_range):
+    """Is date between time range."""
+    reference_time = date.time().replace(second=0, microsecond=0)
+
+    for time in time_range(start_range, end_range):
+        if reference_time == time:
+            return True
+    return False
 
 
 def to_time(raw):
