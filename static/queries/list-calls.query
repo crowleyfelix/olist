@@ -1,0 +1,71 @@
+[
+    {
+        "$match": {
+            "timestamp": {
+                "$gte": {{start_timestamp}},
+                "$lte": {{end_timestamp}}
+            },
+            "type": "end"
+        }
+    },
+    {
+        "$lookup": {
+            "from": "callRecords",
+            "localField": "call_id",
+            "foreignField": "call_id",
+            "as": "record"
+        }
+    },
+    {
+        "$unwind": "$record"
+    },
+    {
+        "$replaceRoot": {
+            "newRoot": "$record"
+        }
+    },
+    {
+        "$group": {
+            "_id": "$call_id",
+            "start_timestamp": {
+                "$max": {
+                    "$cond": [
+                        {
+                            "$eq": [
+                                "$type",
+                                "start"
+                            ]
+                        },
+                        "$timestamp",
+                        0
+                    ]
+                }
+            },
+            "end_timestamp": {
+                "$max": {
+                    "$cond": [
+                        {
+                            "$eq": [
+                                "$type",
+                                "end"
+                            ]
+                        },
+                        "$timestamp",
+                        0
+                    ]
+                }
+            },
+            "source": {
+                "$max": "$source"
+            },
+            "destination": {
+                "$max": "$destination"
+            }
+        }
+    }, 
+    {
+        "$match": {
+            "source": "{{source}}"
+        }
+    }
+]

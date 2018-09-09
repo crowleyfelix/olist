@@ -1,0 +1,14 @@
+FROM jfloff/alpine-python:3.6
+
+ENV LANG en_US.UTF-8
+
+ADD . /src/
+
+WORKDIR /src/
+
+RUN \
+    pip install --upgrade pip; \
+    pip install pipenv; \
+    pipenv install --deploy;
+
+CMD pipenv run python -m app
