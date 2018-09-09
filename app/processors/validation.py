@@ -21,4 +21,11 @@ def closed_bill_period(period):
     """Validate if period could have closed bill."""
     date = datetime.to_datetime(period, datetime.YEAR_MONTH_FMT)
     today = datetime.today()
-    return (date.year <= today.year) and (date.month < today.month)
+
+    if date.year <= today.year:
+        return True
+
+    if date.month < today.month:
+        return True
+
+    return False
