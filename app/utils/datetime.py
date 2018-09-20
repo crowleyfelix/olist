@@ -86,9 +86,9 @@ def begin_end_month(period):
 
 def begin_end_previous_month():
     """Get begin day and end day month from previous month."""
-    reference_date = datetime.today() - relativedelta(month=1)
+    reference_date = datetime.today() - relativedelta(months=1)
 
-    period = f"{reference_date.year}{reference_date.month}"
+    period = f"{reference_date.year}-{reference_date.month}"
     return begin_end_month(period)
 
 
