@@ -1,17 +1,12 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
-
 python_version = "3.6"
 
-
 [dev-packages]
-
 ptpython = "*"
 pylama = "*"
 pytest = "*"
@@ -20,9 +15,7 @@ pytest-cov = "*"
 rope = "*"
 aiohttp = "*"
 
-
 [packages]
-
 sanic = "==0.7.0"
 munch = "*"
 pymongo = "*"
@@ -30,3 +23,4 @@ python-dateutil = "*"
 pandas = "*"
 pystache = "*"
 glom = "*"
+sanic-cors = "==0.6.0.2"
