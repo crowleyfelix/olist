@@ -1,5 +1,6 @@
 """Contains Application class."""
 import logging
+from sanic_cors import CORS
 from app import resources
 from app.infrastructure.web import Engine
 from app.infrastructure.enums import AppMode
@@ -19,6 +20,7 @@ class Application(object):
     def build_engine():
         """Build web server engine."""
         engine = Engine(__name__, configure_logging=False)
+        CORS(engine, automatic_options=True)
         resources.register(engine)
         return engine
 
