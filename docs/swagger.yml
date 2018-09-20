@@ -134,6 +134,12 @@ definitions:
         type: "string"
       destination:
         type: "string"
+    example: 
+      type: start
+      timestamp: 1456747200.0
+      call_id: 70
+      source: "99988526423"
+      destination: "9993468278"
 
   PhoneBill:
     type: "object"
