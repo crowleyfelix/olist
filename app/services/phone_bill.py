@@ -20,9 +20,10 @@ class PhoneBill(metaclass=Singleton):
     def list(self, phone_number, period, page, limit):
         """Get phone bill."""
         LOGGER.debug("Getting phone bill")
+
         bill, page_info = self._get(phone_number, period, page, limit)
 
-        if not page_info["size"] and page_info["current"] == 1:
+        if not page_info["size"] and page_info["current"] == 1 and limit > 0:
             LOGGER.debug("No bill found on first page, generating new")
 
             bill = self._generate_bill(phone_number, period)
