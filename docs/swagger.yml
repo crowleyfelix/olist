@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "1.0.0"
+  version: "0.1.0"
   title: "Olist"
 schemes:
 - "https"
@@ -14,22 +14,21 @@ tags:
 
 paths:
   /call-records:
-
     post:
       summary: "Create call record"
       tags:
-        - "callRecord"
+      - "callRecord"
       operationId: "createCallRecord"
       consumes:
-        - "application/json"
+      - "application/json"
       produces:
-        - "application/json"
+      - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Call Record"
-          schema:
-            $ref: "#/definitions/CallRecord"
+      - name: "body"
+        in: "body"
+        description: "Call Record"
+        schema:
+          $ref: "#/definitions/CallRecord"
       responses:
         201:
           description: "Call record created with success"
@@ -47,45 +46,57 @@ paths:
           description: "Call record already exists"
           schema:
             $ref: "#/definitions/Response"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Response"
                     
   /phones/{phone_number}/bills:
-  
     get:
       summary: "Get phone bill"
       tags:
-        - "phoneBill"
+      - "phoneBill"
       operationId: "getPhoneBill"
-      consumes:
-        - "application/json"
       produces:
-        - "application/json"
+      - "application/json"
       parameters:
-        - in: "path"
-          name: "phone_number"
-          description: "The subscriber phone number"
-          required: true
-        - in: "query"
-          name: "period"
-          description: "The consumption period"
-          required: true
-          pattern: '^\d{4}-\d{2}'
-        - in: "query"
-          name: "page"
-          description: "The page number"
-        - in: "query"
-          name: "limit"
-          description: "The number of items per page"
+      - name: "phone_number"
+        in: "path"
+        description: "The subscriber phone number"
+        required: true
+        type: string
+      - name: "period"
+        in: "query"
+        description: "The consumption period"
+        pattern: '\d{4}-\d{2}'
+        type: string
+      - name: "page"
+        in: "query"
+        description: "The page number"
+        type: number
+      - name: "limit"
+        in: "query"
+        description: "The number of items per page"
+        type: string
       responses:
         200:
           description: "Bill found"
           schema:
             allOf:
-              - $ref: "#/definitions/Response"
-              - properties:
-                  data:
-                    $ref: "#/definitions/PhoneBill"
+            - $ref: "#/definitions/Response"
+            - properties:
+                data:
+                  $ref: "#/definitions/PhoneBill"
+        400:
+          description: "Invalid data passed"
+          schema:
+            $ref: "#/definitions/Response"
         404:
           description: "Bill not found"
+          schema:
+            $ref: "#/definitions/Response"
+        500:
+          description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Response"
 
@@ -104,17 +115,17 @@ definitions:
   CallRecord:
     type: "object"
     required: 
-      - "call_id"
-      - "type"
-      - "timestamp"
+    - "call_id"
+    - "type"
+    - "timestamp"
     properties:
       id:
         type: "string"
       type:
         type: "string"
         enum:
-          - "start"
-          - "end"
+        - "start"
+        - "end"
       timestamp:
         type: "number"
       call_id:
@@ -137,5 +148,3 @@ definitions:
         type: "string"
       price:
         type: "number"
-  
-    
